@@ -1,0 +1,5 @@
+package com.faubel.weather.entities;
+
+public class OpenWeatherResponse {
+	
+}

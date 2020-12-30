@@ -1,0 +1,5 @@
+package com.faubel.weather.dto;
+
+public class GetWeatherRequest {
+
+}

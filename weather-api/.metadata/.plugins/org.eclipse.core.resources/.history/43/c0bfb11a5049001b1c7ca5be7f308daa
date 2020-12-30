@@ -1,0 +1,25 @@
+package com.faubel.weather.entities;
+
+import java.sql.Timestamp;
+import java.util.Date;
+
+public class DailyWeather {
+	private Timestamp dt;
+	private Temp temp;
+
+	public Timestamp getDt() {
+		return dt;
+	}
+
+	public void setDt(Timestamp dt) {
+		this.dt = dt;
+	}
+
+	public Temp getTemp() {
+		return temp;
+	}
+
+	public void setTemp(Temp temp) {
+		this.temp = temp;
+	}
+}

@@ -1,0 +1,15 @@
+package com.faubel.weather.entities;
+
+import java.util.List;
+
+public class WeatherResponse {
+	private List<DailyWeather> daily;
+
+	public List<DailyWeather> getDaily() {
+		return daily;
+	}
+
+	public List<DailyWeather> getDailyWeather() {
+		return daily;
+	}
+}

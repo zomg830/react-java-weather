@@ -1,0 +1,69 @@
+package com.faubel.weather.API;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.faubel.weather.dto.GetWeatherRequest;
+import com.faubel.weather.models.DailyWeather;
+import com.faubel.weather.models.WeatherResponse;
+import com.faubel.weather.util.DateTransformations;
+import com.faubel.weather.util.JSONReader;
+
+@RestController
+public class WeatherRestController {
+	String url = "https://api.openweathermap.org/data/2.5/onecall?lat=%s&lon=%s&units=%s&exclude=current,minutely,hourly,alerts&appid=37a5cc33b1f7372f8661c300330bebd8";
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(value = "/weather", method = RequestMethod.GET)
+	public WeatherResponse getWeather(@PathVariable("lat") double lat, @PathVariable("lon") double lon, @PathVariable("units") String units) throws Exception {
+		System.out.println(lat);
+		System.out.println(lon);
+		System.out.println(units);
+		
+		//Format the url above with extracted parameters
+		String formattedUrl = url.formatted(Double.toString(lon), Double.toString(lon), units);
+		
+		//Call a utility function that pulls in json data from a provided url
+		JSONObject response = JSONReader.ReadURL(formattedUrl);
+		
+		//Instantiate a new object mapper to write the json over to the DailyWeather class
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		WeatherResponse w = new WeatherResponse();
+		w = mapper.readValue(response.toString(), w.getClass());
+		
+		//Pull in the daily weather array and make the necessary modifications
+		List<DailyWeather> dw = w.getDaily();
+
+		for (DailyWeather d : dw) {
+			Date date = DateTransformations.TimestampToDate(d.getDt());
+			int dayOfWeek = DateTransformations.DateToDayOfWeek(date);
+			
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			String dateString = simpleDateFormat.format(date);
+			
+			d.setDate(date);
+			d.setDateString(dateString);
+			d.setDayOfWeek(dayOfWeek);
+			
+			System.out.println(d.getTemp().getMax());
+		}
+		
+		dw.removeIf(d -> (d.getDayOfWeek() == 1) || d.getDayOfWeek() == 7); 
+		
+		w.setDaily(dw);
+
+		//Return the pared down json to FE
+		return w;
+	}
+}

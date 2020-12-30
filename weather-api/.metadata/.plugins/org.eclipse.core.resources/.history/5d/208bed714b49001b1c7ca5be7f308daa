@@ -1,0 +1,17 @@
+package com.faubel.weather.util;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Calendar;
+
+public class DateTransformations {
+	public Date TimestampToDate(Timestamp ts) {
+		return new Date(ts.getTime());
+	}
+	
+	public int DateToDayOfWeek(Date d) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(d);
+		return c.get(Calendar.DAY_OF_WEEK);
+	}
+}

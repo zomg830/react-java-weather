@@ -1,0 +1,54 @@
+package com.faubel.weather.API;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.faubel.weather.dto.GetWeatherRequest;
+import com.faubel.weather.entities.DailyWeather;
+import com.faubel.weather.entities.WeatherResponse;
+import com.faubel.weather.util.DateTransformations;
+import com.faubel.weather.util.URLConnectionReader;
+
+@RestController
+public class WeatherRestController {
+	String url = "https://api.openweathermap.org/data/2.5/onecall?lat=%s&lon=%s&units=%s&exclude=current,minutely,hourly,alerts&appid=37a5cc33b1f7372f8661c300330bebd8";
+//	String url = "https://api.openweathermap.org/data/2.5/onecall?lat=30.267153&lon=-97.743057&exclude=current,minutely,hourly,alerts&appid=37a5cc33b1f7372f8661c300330bebd8";
+
+	@RequestMapping(value = "/weather", method = RequestMethod.POST)
+	public WeatherResponse getWeather(GetWeatherRequest request) throws Exception {
+		double lat = request.getLat();
+		double lon = request.getLon();
+		String units = request.getUnits();
+		
+		String formattedUrl = url.formatted(lat, lon, units);
+		
+		System.out.println(formattedUrl);
+		
+		WeatherResponse response = URLConnectionReader.ReadURL(url);
+		
+		List<DailyWeather> dw = response.getDaily();
+
+		for (DailyWeather d : dw) {
+			Date date = DateTransformations.TimestampToDate(d.getDt());
+			int dayOfWeek = DateTransformations.DateToDayOfWeek(date);
+			
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			String dateString = simpleDateFormat.format(date);
+			
+			d.setDate(date);
+			d.setDateString(dateString);
+			d.setDayOfWeek(dayOfWeek);
+		}
+		
+		dw.removeIf(d -> (d.getDayOfWeek() == 1) || d.getDayOfWeek() == 7); 
+		
+		response.setDaily(dw);
+
+		return response;
+	}
+}

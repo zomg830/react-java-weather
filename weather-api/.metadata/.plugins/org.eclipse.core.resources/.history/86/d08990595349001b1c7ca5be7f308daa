@@ -1,0 +1,25 @@
+package com.faubel.weather.entities;
+
+import java.util.List;
+
+public class OpenWeatherResponse {
+	private double lat;
+	private double lon;
+	private List<DailyWeather> daily;
+
+	public double getLat() {
+		return lat;
+	}
+
+	public double getLon() {
+		return lon;
+	}
+
+	public List<DailyWeather> getDaily() {
+		return daily;
+	}
+
+	public List<DailyWeather> getDailyWeather() {
+		return daily;
+	}
+}

@@ -1,0 +1,20 @@
+package com.faubel.weather.dto;
+
+public class GetWeatherRequest {
+	private double lat;
+	private double lon;
+	private String units;
+
+	public double getLat() {
+		return lat;
+	}
+
+	public double getLon() {
+		return lon;
+	}
+
+	public String getUnits() {
+		return units;
+	}
+
+}

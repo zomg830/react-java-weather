@@ -1,0 +1,35 @@
+package com.faubel.weather.entities;
+
+import java.util.Date;
+
+public class DailyWeather {
+	private Date dt;
+	private DailyTemps temp;
+	private Date date;
+	private int dayOfWeek;
+
+	public Date getDt() {
+		return dt;
+	}
+
+	public DailyTemps getTemp() {
+		return temp;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public int getDayOfWeek() {
+		return dayOfWeek;
+	}
+
+	public void setDayOfWeek(int dayOfWeek) {
+		this.dayOfWeek = dayOfWeek;
+	}
+
+}

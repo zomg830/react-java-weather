@@ -1,0 +1,29 @@
+package com.faubel.weather.util;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+
+import org.json.JSONObject;
+
+//Class that helps pull in JSON from a provided url
+public class JSONReader {
+	public static JSONObject ReadURL(String url) throws Exception {
+
+		URL weather = new URL(url);
+		URLConnection conn = weather.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = in.readLine()) != null) {
+			sb.append(line);
+		}
+		JSONObject json = new JSONObject(sb.toString());
+
+		in.close();
+
+		return json;
+	}
+}

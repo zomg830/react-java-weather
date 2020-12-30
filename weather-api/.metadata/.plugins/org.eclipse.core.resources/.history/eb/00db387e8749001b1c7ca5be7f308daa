@@ -1,0 +1,33 @@
+package com.faubel.weather.dto;
+
+//DTO for handling incoming POST requests
+public class GetWeatherRequest {
+	private float lat;
+	private float lon;
+	private String units;
+
+	public float getLat() {
+		return lat;
+	}
+
+	public void setLat(float lat) {
+		this.lat = lat;
+	}
+
+	public float getLon() {
+		return lon;
+	}
+
+	public void setLon(float lon) {
+		this.lon = lon;
+	}
+
+	public String getUnits() {
+		return units;
+	}
+
+	public void setUnits(String units) {
+		this.units = units;
+	}
+
+}

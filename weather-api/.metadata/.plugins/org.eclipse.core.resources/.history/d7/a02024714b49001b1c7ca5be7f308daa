@@ -1,0 +1,10 @@
+package com.faubel.weather.util;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+
+public class DateTransformations {
+	public Date TimestampToDate(Timestamp ts) {
+		return new Date(ts.getTime());
+	}
+}

@@ -1,0 +1,32 @@
+package com.faubel.weather.dto;
+
+public class GetWeatherRequest {
+	private int lat;
+	private int lon;
+	private String units;
+
+	public int getLat() {
+		return lat;
+	}
+
+	public void setLat(int lat) {
+		this.lat = lat;
+	}
+
+	public int getLon() {
+		return lon;
+	}
+
+	public void setLon(int lon) {
+		this.lon = lon;
+	}
+
+	public String getUnits() {
+		return units;
+	}
+
+	public void setUnits(String units) {
+		this.units = units;
+	}
+
+}

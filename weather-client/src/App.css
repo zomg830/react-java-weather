@@ -1,0 +1,9 @@
+body {
+  text-align: center;
+  background-color: thistle;
+}
+
+.text-input,
+.submit-weather {
+  margin: 8px !important;
+}

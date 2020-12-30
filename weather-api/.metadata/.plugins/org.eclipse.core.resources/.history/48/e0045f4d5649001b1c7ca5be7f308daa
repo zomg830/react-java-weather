@@ -1,0 +1,23 @@
+package com.faubel.weather.util;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+public class DateTransformations {
+	static String dateFormat = "MM/dd/yyyy";
+	
+	public static String TimestampToDate(long timestamp) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+		
+		return simpleDateFormat.format(new Date(timestamp * 1000));
+	}
+
+	public static int DateToDayOfWeek(String dateString) {
+		Date d = new SimpleDateFormat(dateFormat).parse(dateString);
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(d);
+		return c.get(Calendar.DAY_OF_WEEK);
+	}
+}

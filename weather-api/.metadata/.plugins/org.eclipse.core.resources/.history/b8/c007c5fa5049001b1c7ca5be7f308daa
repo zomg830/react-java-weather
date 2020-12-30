@@ -1,0 +1,27 @@
+package com.faubel.weather.util;
+
+import java.net.*;
+import java.io.*;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.faubel.weather.entities.OpenWeatherResponse;
+
+
+
+public class URLConnectionReader {
+	public static String ReadURL(String url) throws Exception {
+		URL weather = new URL(url);
+		URLConnection conn = weather.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+		ObjectMapper mapper = new ObjectMapper();
+		OpenWeatherResponse response = null;
+
+		String inputLine;
+		while ((inputLine = in.readLine()) != null)
+			response = inputLine;
+		in.close();
+		
+		return response;
+	}
+}

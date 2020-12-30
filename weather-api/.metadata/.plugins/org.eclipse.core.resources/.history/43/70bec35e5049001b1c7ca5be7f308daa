@@ -1,0 +1,7 @@
+package com.faubel.weather.entities;
+
+import java.util.List;
+
+public class OpenWeatherResponse {
+	private List<DailyWeather> dailyWeather;
+}
